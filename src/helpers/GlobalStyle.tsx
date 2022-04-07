@@ -13,8 +13,8 @@ const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    overflow:hidden;
     font-family: BlinkMacSystemFont, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    transition: all 0.25s linear;
   }
   *,*::after,*::before{
     margin:0;

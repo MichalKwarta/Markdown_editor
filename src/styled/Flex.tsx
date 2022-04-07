@@ -8,7 +8,7 @@ type FlexStyledProps = {
     width?: string;
     height?: string;
     extra?: string;
-    isBg?: boolean;
+    isbg?: 1|0;
 }
 
 
@@ -22,7 +22,7 @@ const FlexStyled = styled.div<FlexStyledProps>`
     width:${props => props.width || ''};
     height:${props => props.height || ''};
 
-    background-color: ${props => props.isBg ? props.theme.bg:props.theme.elementColor || 'transparent'};
+    background-color: ${props => props.isbg ===1? props.theme.bg:props.theme.elementColor || 'transparent'};
     word-wrap: break-word;
     white-space: pre-wrap;
     word-break: break-word;
@@ -30,7 +30,7 @@ const FlexStyled = styled.div<FlexStyledProps>`
 `
 
 FlexStyled.defaultProps = {
-    isBg: false
+    isbg: 0
 }
 
 export default FlexStyled
