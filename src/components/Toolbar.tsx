@@ -53,6 +53,7 @@ function Toolbar(props: {boldText:()=>void, selection: { start: number, end: num
       direction="row"
       justify="center"
       align="center"
+      wrap="wrap"
       width="20%"
       variants={container}
       initial="hidden"

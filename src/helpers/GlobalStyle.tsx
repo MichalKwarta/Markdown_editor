@@ -21,7 +21,7 @@ const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
     padding:0;
     box-sizing:border-box;
   }
-  html,body{
+  html,body,#root{
     height:100%;
     width:100%;
   }

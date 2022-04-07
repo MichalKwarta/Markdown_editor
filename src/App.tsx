@@ -29,6 +29,7 @@ function App() {
 
   const [plainText, setPlainText] = React.useState<string>("Write something here");
   const boldText = () => { 
+    if (selection.start===selection.end) return
     if (selection.start >= 0 && selection.end <= plainText.length) {
       if (plainText[selection.start - 2] === '*' && plainText[selection.end + 1] === "*") {
           
@@ -53,9 +54,9 @@ function App() {
   return (
     <ThemeProvider theme={theme[t]}>
       <GlobalStyle {...theme[t]} />
-      <FlexStyled height="100vh">
+      <FlexStyled height="100%" wrap="nowrap">
         <FlexStyled
-          width="100vw"
+          width="100%"
           direction="row"
           justify="space-between"
           align="center"

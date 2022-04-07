@@ -16,7 +16,7 @@ type FlexStyledProps = {
 const FlexStyled = styled.div<FlexStyledProps>`
     display: flex;
     flex-direction: ${props => props.direction || 'column'};
-    flex-wrap: ${props => props.wrap || 'wrap'};
+    flex-wrap: ${props => props.wrap || 'nowrap'};
     justify-content: ${props => props.justify || 'center'};
     align-items: ${props => props.align || 'center'};
     width:${props => props.width || ''};
