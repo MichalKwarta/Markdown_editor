@@ -37,7 +37,14 @@ const item = {
   show: { opacity: 1, y: 0 },
 };
 
-
+const sliceHelper = (str:string, ...slices:number[][]) => { 
+    
+    let newString = ""
+    for (const sliceElem of slices) { 
+        newString+=str.slice(...sliceElem)
+    }
+    return newString
+}
 
 function Toolbar(props: { selection: { start: number, end: number },plainText:string,setPlainText:React.Dispatch<React.SetStateAction<string>> }) {
   return (
@@ -52,23 +59,22 @@ function Toolbar(props: { selection: { start: number, end: number },plainText:st
       animate="show"
     >
           <SpanWithHoverAnimation as={motion.span} variants={item} onClick={() => {
-              
-              if (props.selection.start >= 2 && props.selection.end <= props.plainText.length) {
-                  console.log(props.selection)
+            
+              if (props.selection.start >= 0 && props.selection.end <= props.plainText.length) {
                   if (props.plainText[props.selection.start - 2] === '*' && props.plainText[props.selection.end + 1] === "*") {
                       
-                    props.setPlainText(props.plainText.slice(0, props.selection.start-2)  + props.plainText.slice(props.selection.start, props.selection.end)  + props.plainText.slice(props.selection.end+2))
+                    props.setPlainText(sliceHelper(props.plainText,[0, props.selection.start-2], [props.selection.start, props.selection.end] ,[props.selection.end+2]))
 
                   }
                   else if (props.plainText[props.selection.start] === '*' && props.plainText[props.selection.end-1] === "*") {
-                    props.setPlainText(props.plainText.slice(0, props.selection.start)  + props.plainText.slice(props.selection.start+2, props.selection.end-2)  + props.plainText.slice(props.selection.end))
+                    props.setPlainText(sliceHelper(props.plainText,[0, props.selection.start], [props.selection.start+2, props.selection.end-2],[props.selection.end]))
                       
-                    console.log("CHUJ")
                   }
                   else {
                       props.setPlainText(props.plainText.slice(0, props.selection.start) + "**" + props.plainText.slice(props.selection.start, props.selection.end) + "**" + props.plainText.slice(props.selection.end))
 
                   }
+                  
 
               }
           }}>
