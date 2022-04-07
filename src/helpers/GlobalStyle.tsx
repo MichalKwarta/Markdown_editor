@@ -14,6 +14,7 @@ const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
     flex-direction: column;
     justify-content: center;
     font-family: BlinkMacSystemFont, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
   }
   *,*::after,*::before{
     margin:0;

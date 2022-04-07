@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { ChangeEvent, Dispatch, ReactEventHandler, SetStateAction, SyntheticEvent, useState } from "react";
 import Grid from "../styled/Grid";
 import GridChild from "../styled/GridChild";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
-import Toolbar from "./Toolbar";
 
 const WriteArea = styled(GridChild)`
   grid-column-start: 2;
@@ -18,7 +17,10 @@ const WriteArea = styled(GridChild)`
   padding: 1rem;
   font-size: 1rem;
   font-family: inherit;
+  
   letter-spacing: 0.1rem;
+  transition: background-color .25s ease-in;
+
 
   padding: 1rem;
   &:focus {
@@ -30,10 +32,9 @@ const WriteArea = styled(GridChild)`
   }
 `;
 
-function WorkArea() {
-  const [plainText, setPlainText] = useState<string>("Write something here");
+function WorkArea(props: { plainText:string,setPlainText:React.Dispatch<React.SetStateAction<string>>,  selectionSetter: Dispatch<SetStateAction<{ start: number; end: number; }>> }) {
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setPlainText(e.target.value);
+    props.setPlainText(e.target.value);
   };
   return (
     <Grid
@@ -46,17 +47,21 @@ function WorkArea() {
       padding="1rem"
     >
       <WriteArea
-        as={motion.textarea}
-        initial={{ x: "-100%" }}
-        animate={{ x: 0 }}
-        exit={{ x: "-100%" }}
-        transition={{ duration: 1, ease: "easeOut" }}
-        placeholder={"Write something here"}
-        onChange={handleChange}
-        rowstart={1}
-        rowend={2}
-        columnend={1}
-        columnstart={1}
+              as={motion.textarea}
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              placeholder={"Write something here"}
+              onChange={handleChange}
+              rowstart={1}
+              rowend={2}
+              columnend={1}
+              columnstart={1}
+              onSelect={(e: ChangeEvent<HTMLTextAreaElement>) => {
+                  props.selectionSetter({ start: e.target.selectionStart, end: e.target.selectionEnd })
+              }}
+              value={ props.plainText}
       ></WriteArea>
       <WriteArea
         as={motion.div}
@@ -69,7 +74,7 @@ function WorkArea() {
         columnend={2}
         columnstart={2}
       >
-        <ReactMarkdown children={plainText} />
+        <ReactMarkdown children={props.plainText} />
       </WriteArea>
     </Grid>
   );

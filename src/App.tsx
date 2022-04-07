@@ -12,27 +12,25 @@ import WorkArea from "./components/WorkArea";
 import Toolbar from "./components/Toolbar";
 
 function App() {
-  const [t, setTheme] = React.useState<"light" | "dark">("light");
-
-  // The function that toggles between themes
+  const [t, setTheme] = React.useState<"light" | "dark">("dark");
+  const [selection, setSelection] = React.useState({ start: 0, end: 0 });
   const toggleTheme = () => {
-    // if the theme is not light, then set it to dark
     if (t === "light") {
       setTheme("dark");
-      // otherwise, it should be light
     } else {
       setTheme("light");
     }
   };
+
+
+  const [plainText, setPlainText] = React.useState<string>("Write something here");
+
   const icon = t === "light" ? MoonIcon : sunIcon;
 
   return (
     <ThemeProvider theme={theme[t]}>
       <GlobalStyle {...theme[t]} />
-      <FlexStyled
-          height="100vh"
-       
-      >
+      <FlexStyled height="100vh">
         <FlexStyled
           width="100vw"
           direction="row"
@@ -40,19 +38,18 @@ function App() {
           align="center"
           extra="padding:1rem 3rem;"
           as={motion.div}
-          isbg={ 1}
+          isbg={1}
           initial={{ y: "-100%" }}
           animate={{ y: 0 }}
           exit={{ y: -100 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          
         >
           <h1>Awesome Notes App</h1>
-            <Toolbar/>
+          <Toolbar selection={ selection}  plainText={plainText} setPlainText={ setPlainText} />
           <Toggle
             as={motion.div}
-            onClick={() => { toggleTheme(); console.log(window.getSelection()!.toString()) }}
-            darkmode={t !== "light"?1:0}
+            onClick={toggleTheme}
+            darkmode={t !== "light" ? 1 : 0}
           >
             <motion.img
               key={icon}
@@ -66,11 +63,12 @@ function App() {
           </Toggle>
         </FlexStyled>
 
-        <WorkArea></WorkArea>
-
-
+        <WorkArea selectionSetter={setSelection} plainText={plainText} setPlainText={ setPlainText}/>
       </FlexStyled>
     </ThemeProvider>
   );
 }
 export default App;
+
+// Type '{ selectionSetter: Dispatch<SetStateAction<{ start: number; end: number; }>>; }' is not assignable to type 'IntrinsicAttributes & Dispatch<SetStateAction<{ start: number; end: number; }>>'.
+  // Property 'selectionSetter' does not exist on type 'IntrinsicAttributes & Dispatch<SetStateAction<{ start: number; end: number; }>>'.

@@ -26,6 +26,8 @@ const FlexStyled = styled.div<FlexStyledProps>`
     word-wrap: break-word;
     white-space: pre-wrap;
     word-break: break-word;
+    transition: background-color .25s ease-in;
+
     ${props=>props.extra||''}
 `
 
