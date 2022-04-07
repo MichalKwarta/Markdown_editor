@@ -9,6 +9,7 @@ import Toggle from "./styled/Toggle";
 import MoonIcon from "./resources/moon.svg";
 import sunIcon from "./resources/sun.svg";
 import WorkArea from "./components/WorkArea";
+import Toolbar from "./components/Toolbar";
 
 function App() {
   const [t, setTheme] = React.useState<"light" | "dark">("light");
@@ -36,7 +37,7 @@ function App() {
           width="100vw"
           direction="row"
           justify="space-between"
-          align="start"
+          align="center"
           extra="padding:1rem 3rem;"
           as={motion.div}
           isbg={ 1}
@@ -46,7 +47,8 @@ function App() {
           transition={{ duration: 1, ease: "easeOut" }}
           
         >
-          <h1>Welcome to React Router!</h1>
+          <h1>Awesome Notes App</h1>
+            <Toolbar/>
           <Toggle
             as={motion.div}
             onClick={() => { toggleTheme(); console.log(window.getSelection()!.toString()) }}

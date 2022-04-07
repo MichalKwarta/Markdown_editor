@@ -1,15 +1,15 @@
 import styled from "styled-components";
 
 type gridProps = {
-    templateColumns?: string;
-    templateRows?: string;
-    justifyItems?: 'start' | 'end' | 'center' | 'stretch';
-    alignItems?: 'start' | 'end' | 'center' | 'stretch';
+    templatecolumns?: string;
+    templaterows?: string;
+    justifyitems?: 'start' | 'end' | 'center' | 'stretch';
+    alignitems?: 'start' | 'end' | 'center' | 'stretch';
     width?: string;
     height?: string;
-    columnGap?: string;
-    rowGap?: string;
-
+    columngap?: string;
+    rowgap?: string;
+    padding?: string;
     margin?: string;
     
 
@@ -18,19 +18,18 @@ type gridProps = {
 
 const Grid = styled.div<gridProps>`
     display:grid;
-    grid-template-columns:${props => props.templateColumns || '1fr'};
-    grid-template-rows:${props => props.templateRows || '1fr'};
-    justify-items:${props => props.justifyItems || 'center'};
-    align-items:${props => props.alignItems || 'center'};
-    width:${props => `calc(${props.width} - ${props.columnGap})`|| ''};
+    grid-template-columns:${props => props.templatecolumns || '1fr'};
+    grid-template-rows:${props => props.templaterows || '1fr'};
+    justify-items:${props => props.justifyitems || 'center'};
+    align-items:${props => props.alignitems || 'center'};
+    width:${props =>  props.width|| ''};
     height:${props => props.height || ''};
-    column-gap:${props => props.columnGap || '0px'};
-    row-gap:${props => props.rowGap || '0px'};
-
+    column-gap:${props => props.columngap || '0px'};
+    row-gap:${props => props.rowgap || '0px'};
+    padding:${props=>props.padding||'0px'};
     margin:${props => props.margin || '0px'};
     overflow-y:auto;
     overflow-x:hidden;
-
     position: relative;
     &::-webkit-scrollbar {
          width:1rem;
