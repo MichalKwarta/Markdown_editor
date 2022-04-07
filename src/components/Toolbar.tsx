@@ -46,7 +46,7 @@ const sliceHelper = (str:string, ...slices:number[][]) => {
     return newString
 }
 
-function Toolbar(props: { selection: { start: number, end: number },plainText:string,setPlainText:React.Dispatch<React.SetStateAction<string>> }) {
+function Toolbar(props: {boldText:()=>void, selection: { start: number, end: number },plainText:string,setPlainText:React.Dispatch<React.SetStateAction<string>> }) {
   return (
     <ToolbarWrapper
       as={motion.div}
@@ -57,27 +57,11 @@ function Toolbar(props: { selection: { start: number, end: number },plainText:st
       variants={container}
       initial="hidden"
       animate="show"
+      
     >
-          <SpanWithHoverAnimation as={motion.span} variants={item} onClick={() => {
-            
-              if (props.selection.start >= 0 && props.selection.end <= props.plainText.length) {
-                  if (props.plainText[props.selection.start - 2] === '*' && props.plainText[props.selection.end + 1] === "*") {
-                      
-                    props.setPlainText(sliceHelper(props.plainText,[0, props.selection.start-2], [props.selection.start, props.selection.end] ,[props.selection.end+2]))
-
-                  }
-                  else if (props.plainText[props.selection.start] === '*' && props.plainText[props.selection.end-1] === "*") {
-                    props.setPlainText(sliceHelper(props.plainText,[0, props.selection.start], [props.selection.start+2, props.selection.end-2],[props.selection.end]))
-                      
-                  }
-                  else {
-                      props.setPlainText(props.plainText.slice(0, props.selection.start) + "**" + props.plainText.slice(props.selection.start, props.selection.end) + "**" + props.plainText.slice(props.selection.end))
-
-                  }
-                  
-
-              }
-          }}>
+      <SpanWithHoverAnimation as={motion.span} variants={item} onClick={props.boldText}
+        
+        >
         <FaBold />
       </SpanWithHoverAnimation>
 

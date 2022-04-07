@@ -32,7 +32,7 @@ const WriteArea = styled(GridChild)`
   }
 `;
 
-function WorkArea(props: { plainText:string,setPlainText:React.Dispatch<React.SetStateAction<string>>,  selectionSetter: Dispatch<SetStateAction<{ start: number; end: number; }>> }) {
+function WorkArea(props: { boldText:()=>void,plainText:string,setPlainText:React.Dispatch<React.SetStateAction<string>>,  selectionSetter: Dispatch<SetStateAction<{ start: number; end: number; }>> }) {
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     props.setPlainText(e.target.value);
   };
@@ -61,7 +61,15 @@ function WorkArea(props: { plainText:string,setPlainText:React.Dispatch<React.Se
               onSelect={(e: ChangeEvent<HTMLTextAreaElement>) => {
                   props.selectionSetter({ start: e.target.selectionStart, end: e.target.selectionEnd })
               }}
-              value={ props.plainText}
+        value={props.plainText}
+        onKeyDown={(e: any) => { 
+          if (e.ctrlKey) { 
+            switch (e.key) { 
+              case "b"||"B":
+                props.boldText()
+            }
+          }
+        }}
       ></WriteArea>
       <WriteArea
         as={motion.div}
@@ -73,6 +81,7 @@ function WorkArea(props: { plainText:string,setPlainText:React.Dispatch<React.Se
         rowend={2}
         columnend={2}
         columnstart={2}
+       
       >
         <ReactMarkdown children={props.plainText} />
       </WriteArea>
