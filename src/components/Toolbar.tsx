@@ -46,7 +46,7 @@ const sliceHelper = (str:string, ...slices:number[][]) => {
     return newString
 }
 
-function Toolbar(props: {boldText:()=>void, selection: { start: number, end: number },plainText:string,setPlainText:React.Dispatch<React.SetStateAction<string>> }) {
+function Toolbar(props: {italicText:()=>void,boldText:()=>void, selection: { start: number, end: number },plainText:string,setPlainText:React.Dispatch<React.SetStateAction<string>> }) {
   return (
     <ToolbarWrapper
       as={motion.div}
@@ -66,7 +66,7 @@ function Toolbar(props: {boldText:()=>void, selection: { start: number, end: num
         <FaBold />
       </SpanWithHoverAnimation>
 
-      <SpanWithHoverAnimation as={motion.span} variants={item}>
+      <SpanWithHoverAnimation as={motion.span} variants={item} onClick={ props.italicText}>
         <FaItalic />
       </SpanWithHoverAnimation>
       <SpanWithHoverAnimation as={motion.span} variants={item}>

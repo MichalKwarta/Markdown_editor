@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, ReactEventHandler, SetStateAction, SyntheticEvent, useState } from "react";
+import { ChangeEvent, Dispatch,  SetStateAction } from "react";
 import Grid from "../styled/Grid";
 import GridChild from "../styled/GridChild";
 import styled from "styled-components";
@@ -17,7 +17,6 @@ const WriteArea = styled(GridChild)`
   padding: 1rem;
   font-size: 1rem;
   font-family: inherit;
-  
   letter-spacing: 0.1rem;
   transition: background-color .25s ease-in;
 
@@ -32,7 +31,13 @@ const WriteArea = styled(GridChild)`
   }
 `;
 
-function WorkArea(props: { boldText:()=>void,plainText:string,setPlainText:React.Dispatch<React.SetStateAction<string>>,  selectionSetter: Dispatch<SetStateAction<{ start: number; end: number; }>> }) {
+
+
+
+
+
+
+function WorkArea(props: { italicText:()=>void,boldText:()=>void,plainText:string,setPlainText:React.Dispatch<React.SetStateAction<string>>,  selectionSetter: Dispatch<SetStateAction<{ start: number; end: number; }>> }) {
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     props.setPlainText(e.target.value);
   };
@@ -46,7 +51,7 @@ function WorkArea(props: { boldText:()=>void,plainText:string,setPlainText:React
       rowgap="1rem"
       padding="1rem"
     >
-      <WriteArea
+      <WriteArea 
               as={motion.textarea}
               initial={{ x: "-100%" }}
               animate={{ x: 0 }}
@@ -67,7 +72,12 @@ function WorkArea(props: { boldText:()=>void,plainText:string,setPlainText:React
             switch (e.key) { 
               case "b"||"B":
                 props.boldText()
+                break;
+              case "i" || "I":
+                props.italicText()
+                
             }
+              
           }
         }}
       ></WriteArea>
@@ -81,9 +91,9 @@ function WorkArea(props: { boldText:()=>void,plainText:string,setPlainText:React
         rowend={2}
         columnend={2}
         columnstart={2}
-       
+        className="workarea__markdown"
       >
-        <ReactMarkdown children={props.plainText} />
+        <ReactMarkdown children={props.plainText} className="markdown"/>
       </WriteArea>
     </Grid>
   );

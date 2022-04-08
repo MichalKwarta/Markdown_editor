@@ -10,9 +10,7 @@ import MoonIcon from "./resources/moon.svg";
 import sunIcon from "./resources/sun.svg";
 import WorkArea from "./components/WorkArea";
 import Toolbar from "./components/Toolbar";
-import {sliceHelper} from './helpers/helperfunctions'
-
-
+import { sliceHelper } from "./helpers/helperfunctions";
 
 function App() {
   const [t, setTheme] = React.useState<"light" | "dark">("dark");
@@ -25,29 +23,97 @@ function App() {
     }
   };
 
-  
+  const [plainText, setPlainText] = React.useState<string>(
+    "Write something here"
+  );
 
-  const [plainText, setPlainText] = React.useState<string>("Write something here");
-  const boldText = () => { 
-    if (selection.start===selection.end) return
-    if (selection.start >= 0 && selection.end <= plainText.length) {
-      if (plainText[selection.start - 2] === '*' && plainText[selection.end + 1] === "*") {
-          
-        setPlainText(sliceHelper(plainText,[0, selection.start-2], [selection.start, selection.end] ,[selection.end+2]))
+  const selectionChecker: () => boolean = () => {
+    return (
+      selection.start !== selection.end &&
+      selection.start >= 0 &&
+      selection.end <= plainText.length
+    );
+  };
 
-      }
-      else if (plainText[selection.start] === '*' && plainText[selection.end-1] === "*") {
-        setPlainText(sliceHelper(plainText,[0, selection.start], [selection.start+2, selection.end-2],[selection.end]))
-          
-      }
-      else {
-          setPlainText(plainText.slice(0, selection.start) + "**" + plainText.slice(selection.start, selection.end) + "**" + plainText.slice(selection.end))
+  const boldText = () => {
+    if (selectionChecker() === false) return;
 
-      }
+    if (
+      plainText[selection.start - 2] === "*" &&
+      plainText[selection.end + 1] === "*"
+    ) {
+      setPlainText(
+        sliceHelper(
+          plainText,
+          [0, selection.start - 2],
+          [selection.start, selection.end],
+          [selection.end + 2]
+        )
+      );
+    } else if (
+      plainText[selection.start] === "*" &&
+      plainText[selection.end - 1] === "*"
+    ) {
+      setPlainText(
+        sliceHelper(
+          plainText,
+          [0, selection.start],
+          [selection.start + 2, selection.end - 2],
+          [selection.end]
+        )
+      );
+    } else {
+      setPlainText(
+        plainText.slice(0, selection.start) +
+          "**" +
+          plainText.slice(selection.start, selection.end) +
+          "**" +
+          plainText.slice(selection.end)
+      );
+    }
+  };
+  const italicText = () => {
+    console.log(selection.start,selection.end);
+    if (selectionChecker() === false) return;
+
+    if (
+      plainText[selection.start] === "*" &&
+      plainText[selection.end - 1] === "*"
+    ) {
+      setPlainText(
+        sliceHelper(
+          plainText,
+          [0, selection.start],
+          [selection.start+1, selection.end-1],
+          [selection.end ]
+        )
+      );
+    }
+    else if (
+      plainText[selection.start-1] === "*" &&
+      plainText[selection.end ] === "*"
+    ) { 
+      setPlainText(
+        sliceHelper(
+          plainText,
+          [0, selection.start-1],
+          [selection.start, selection.end],
+          [selection.end+1]
+        )
+      );
       
-
-  }
-  }
+    }
+    
+    else {
+      setPlainText(
+        plainText.slice(0, selection.start) +
+          "*" +
+          plainText.slice(selection.start, selection.end) +
+          "*" +
+          plainText.slice(selection.end)
+      );
+    }
+  };
 
   const icon = t === "light" ? MoonIcon : sunIcon;
 
@@ -69,9 +135,14 @@ function App() {
           transition={{ duration: 1, ease: "easeOut" }}
         >
           <h1>Awesome Notes App</h1>
-          <Toolbar selection={selection} plainText={plainText} setPlainText={setPlainText}
-          boldText={boldText}/>
-          
+          <Toolbar
+            selection={selection}
+            plainText={plainText}
+            setPlainText={setPlainText}
+            boldText={boldText}
+            italicText={ italicText}
+          />
+
           <Toggle
             as={motion.div}
             onClick={toggleTheme}
@@ -89,8 +160,13 @@ function App() {
           </Toggle>
         </FlexStyled>
 
-        <WorkArea selectionSetter={setSelection} plainText={plainText} setPlainText={setPlainText}
-          boldText={ boldText}
+        <WorkArea
+          selectionSetter={setSelection}
+          plainText={plainText}
+          setPlainText={setPlainText}
+          boldText={boldText}
+          italicText={ italicText}
+
         />
       </FlexStyled>
     </ThemeProvider>
@@ -99,4 +175,4 @@ function App() {
 export default App;
 
 // Type '{ selectionSetter: Dispatch<SetStateAction<{ start: number; end: number; }>>; }' is not assignable to type 'IntrinsicAttributes & Dispatch<SetStateAction<{ start: number; end: number; }>>'.
-  // Property 'selectionSetter' does not exist on type 'IntrinsicAttributes & Dispatch<SetStateAction<{ start: number; end: number; }>>'.
+// Property 'selectionSetter' does not exist on type 'IntrinsicAttributes & Dispatch<SetStateAction<{ start: number; end: number; }>>'.

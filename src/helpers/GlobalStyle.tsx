@@ -25,6 +25,36 @@ const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
     height:100%;
     width:100%;
   }
+  @media print{
+    body{
+      background-color: white;
+
+      
+  }
+  *{
+    border:none !important;
+  }
+  .markdown {
+    position:fixed;
+    top:0;
+    left:0;
+    width:100vw;
+    height:100vh;
+    background-color: white;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+    align-items:flex-start;
+    padding:10px;
+    color:black;
+    border:none;
+    &>*{
+      padding:0.2rem;
+    }
+
+  }
   
+
+}
 `
 export default GlobalStyle
