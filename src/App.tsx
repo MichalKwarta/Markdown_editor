@@ -11,6 +11,8 @@ import sunIcon from "./resources/sun.svg";
 import WorkArea from "./components/WorkArea";
 import Toolbar from "./components/Toolbar";
 import { sliceHelper } from "./helpers/helperfunctions";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Login from "./components/Login";
 
 function App() {
   const [t, setTheme] = React.useState<"light" | "dark">("dark");
@@ -36,8 +38,8 @@ function App() {
   };
 
   const boldText = () => {
-    console.log(plainText[0]==='\n')
-    console.log(plainText.split(''))
+    console.log(plainText[0] === "\n");
+    console.log(plainText.split(""));
     if (selectionChecker() === false) return;
 
     if (
@@ -85,27 +87,23 @@ function App() {
         sliceHelper(
           plainText,
           [0, selection.start],
-          [selection.start+1, selection.end-1],
-          [selection.end ]
+          [selection.start + 1, selection.end - 1],
+          [selection.end]
         )
       );
-    }
-    else if (
-      plainText[selection.start-1] === "*" &&
-      plainText[selection.end ] === "*"
-    ) { 
+    } else if (
+      plainText[selection.start - 1] === "*" &&
+      plainText[selection.end] === "*"
+    ) {
       setPlainText(
         sliceHelper(
           plainText,
-          [0, selection.start-1],
+          [0, selection.start - 1],
           [selection.start, selection.end],
-          [selection.end+1]
+          [selection.end + 1]
         )
       );
-      
-    }
-    
-    else {
+    } else {
       setPlainText(
         plainText.slice(0, selection.start) +
           "*" +
@@ -115,37 +113,43 @@ function App() {
       );
     }
   };
-  const addHeading = () => { 
-    console.log(selection.start,selection.end);
-    
-    let start = selection.start
+  const addHeading = () => {
+    console.log(selection.start, selection.end);
 
-    while (start >= 0){ 
-      if (plainText[start] === '\n') {
+    let start = selection.start;
+
+    while (start >= 0) {
+      if (plainText[start] === "\n") {
         break;
-      }
-      else if (plainText[start] === '#') {
-        setPlainText(sliceHelper(plainText, [0, start], [start+1, selection.end],[selection.end]))
+      } else if (plainText[start] === "#") {
+        setPlainText(
+          sliceHelper(
+            plainText,
+            [0, start],
+            [start + 1, selection.end],
+            [selection.end]
+          )
+        );
         return;
       }
       start--;
     }
-    let end = selection.end
+    let end = selection.end;
     while (end < plainText.length) {
-      if (plainText[end] === '\n') {
+      if (plainText[end] === "\n") {
         break;
       }
-      end++
+      end++;
     }
 
-    const text = plainText.slice(0, start+1) + ((plainText[start+1]===' ')?'#':"# ") + plainText.slice(start+1, end)  + plainText.slice(end)
-    setPlainText(text)
+    const text =
+      plainText.slice(0, start + 1) +
+      (plainText[start + 1] === " " ? "#" : "# ") +
+      plainText.slice(start + 1, end) +
+      plainText.slice(end);
+    setPlainText(text);
+  };
 
-
-
-  }
-
-  
   const icon = t === "light" ? MoonIcon : sunIcon;
 
   return (
@@ -166,14 +170,6 @@ function App() {
           transition={{ duration: 1, ease: "easeOut" }}
         >
           <h1>Awesome Notes App</h1>
-          <Toolbar
-            selection={selection}
-            plainText={plainText}
-            setPlainText={setPlainText}
-            boldText={boldText}
-            italicText={italicText}
-            addHeading={ addHeading}
-          />
 
           <Toggle
             as={motion.div}
@@ -192,16 +188,27 @@ function App() {
           </Toggle>
         </FlexStyled>
 
-        <WorkArea
-          selectionSetter={setSelection}
-          plainText={plainText}
-          setPlainText={setPlainText}
-          boldText={boldText}
-          italicText={italicText}
-          addHeading={ addHeading}
-          
+        <Router>
+          <Routes>
+            <Route
+              path="/editor"
+              element={
+                <WorkArea
+                  selectionSetter={setSelection}
+                  plainText={plainText}
+                  setPlainText={setPlainText}
+                  boldText={boldText}
+                  italicText={italicText}
+                  addHeading={addHeading}
+                />
+              }
+            ></Route>
 
-        />
+            <Route path="/" element={<Login/>}/>
+
+
+          </Routes>
+        </Router>
       </FlexStyled>
     </ThemeProvider>
   );

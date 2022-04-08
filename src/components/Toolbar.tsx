@@ -6,15 +6,15 @@ import { motion } from "framer-motion";
 import SpanWithHoverAnimation from "../styled/SpanWithHoverAnimation";
 
 const ToolbarWrapper = styled(FlexStyled)`
-  background-color: ${(props) => props.theme.bg};
+  background-color: ${(props) => props.theme.elementcolor};
   border-radius: 0.5rem;
   transition: background-color 0.25s ease-in;
   -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; 
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
   & > * {
     border: 1px solid ${(props) => props.theme.color};
     width: 2rem;
@@ -42,16 +42,13 @@ const item = {
   show: { opacity: 1, y: 0 },
 };
 
-const sliceHelper = (str:string, ...slices:number[][]) => { 
-    
-    let newString = ""
-    for (const sliceElem of slices) { 
-        newString+=str.slice(...sliceElem)
-    }
-    return newString
-}
-
-function Toolbar(props: {addHeading:()=>void,italicText:()=>void,boldText:()=>void, selection: { start: number, end: number },plainText:string,setPlainText:React.Dispatch<React.SetStateAction<string>> }) {
+function Toolbar(props: {
+  addHeading: () => void;
+  italicText: () => void;
+  boldText: () => void;
+  plainText: string;
+  setPlainText: React.Dispatch<React.SetStateAction<string>>;
+}) {
   return (
     <ToolbarWrapper
       as={motion.div}
@@ -59,22 +56,31 @@ function Toolbar(props: {addHeading:()=>void,italicText:()=>void,boldText:()=>vo
       justify="center"
       align="center"
       wrap="wrap"
-      width="20%"
+      width="100%"
       variants={container}
       initial="hidden"
       animate="show"
-      
     >
-      <SpanWithHoverAnimation as={motion.span} variants={item} onClick={props.boldText}
-        
-        >
+      <SpanWithHoverAnimation
+        as={motion.span}
+        variants={item}
+        onClick={props.boldText}
+      >
         <FaBold />
       </SpanWithHoverAnimation>
 
-      <SpanWithHoverAnimation as={motion.span} variants={item} onClick={ props.italicText}>
+      <SpanWithHoverAnimation
+        as={motion.span}
+        variants={item}
+        onClick={props.italicText}
+      >
         <FaItalic />
       </SpanWithHoverAnimation>
-      <SpanWithHoverAnimation as={motion.span} variants={item} onClick={ props.addHeading}>
+      <SpanWithHoverAnimation
+        as={motion.span}
+        variants={item}
+        onClick={props.addHeading}
+      >
         <FaHeading />
       </SpanWithHoverAnimation>
     </ToolbarWrapper>
