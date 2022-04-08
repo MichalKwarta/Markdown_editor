@@ -41,16 +41,10 @@ const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
     width:100vw;
     height:100vh;
     background-color: white;
-    display:flex;
-    flex-direction:column;
-    justify-content:flex-start;
-    align-items:flex-start;
     padding:10px;
     color:black;
     border:none;
-    &>*{
-      padding:0.2rem;
-    }
+  
 
   }
   
