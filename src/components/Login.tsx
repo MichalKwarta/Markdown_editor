@@ -1,7 +1,10 @@
 import React from 'react'
 import FlexStyled from '../styled/Flex'
 import FlexCard from '../styled/FlexCard'
-
+import Grid from '../styled/Grid'
+import GridChild from '../styled/GridChild'
+import StyledInput from '../styled/Input'
+import { ReactComponent as LoginImage } from '../resources/login.svg'
 
 function Login() {
   return (
@@ -14,7 +17,27 @@ function Login() {
           
       >
 
-          <FlexCard>
+          <FlexCard width="clamp(20rem, 50vw, 300rem);" height="clamp(50vh,70vh,100vh)">
+              <Grid
+                  templatecolumns='repeat(2, minmax(0, 1fr));'
+                  templaterows='1fr'
+                  columngap='1rem'
+              >
+
+                  <GridChild rowstart={1} rowend={2} columnstart={1} columnend={2} justifyself="center" alignself="start" >
+                      <h1 style={{marginBottom:"1rem"}}>Login Friend!</h1>
+                      <StyledInput myplaceholder="Email" id="Email" type="text"></StyledInput>
+                      <StyledInput myplaceholder="Password" id="Password" type="password"></StyledInput>
+
+                  </GridChild>
+
+                  <GridChild rowstart={1} rowend={2} columnstart={2} columnend={3} >
+                      
+                      <LoginImage width="100%" />
+
+                  </GridChild>
+
+              </Grid>
               
          </FlexCard>
 
