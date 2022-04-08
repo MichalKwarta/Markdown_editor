@@ -10,6 +10,12 @@ const Toggle = styled.button<{darkmode:1|0}>`
     padding:1rem;
     border:1px solid ${props => props.theme.color || 'transparent'};
     background-color: ${props => props.theme.elementColor};
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; 
     &:focus {
         outline: none;
     }

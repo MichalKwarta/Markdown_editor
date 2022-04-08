@@ -1,11 +1,8 @@
 import { createGlobalStyle } from 'styled-components'
+import { themeProps} from "./theme"
 
-interface GlobalStyleProps { 
-  color: string,
-  bg:string
-}
 
-const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
+const GlobalStyle = createGlobalStyle<themeProps>`
   body {
     color: ${props => (props.color||"white")};
     background-color: ${props => (props.bg || "black")};
@@ -25,28 +22,31 @@ const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
     height:100%;
     width:100%;
   }
-  @media print{
-    body{
-      background-color: white;
 
-      
+  blockquote{
+    font-style:italic;
+    border:1px solid ${props => props.color|| "white"};
+    border-left:0.5rem solid ${props => props.color|| "white"};;
+    padding-left:0.5rem;
+    background-color:${props => props.bg|| "white"};
   }
-  *{
-    border:none !important;
-  }
+  @media print{
+ 
   .markdown {
+    border:none !important;
+
     position:fixed;
     top:0;
     left:0;
     width:100vw;
     height:100vh;
-    background-color: white;
     padding:10px;
     color:black;
     border:none;
   
 
   }
+
   
 
 }

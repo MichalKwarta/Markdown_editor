@@ -36,6 +36,8 @@ function App() {
   };
 
   const boldText = () => {
+    console.log(plainText[0]==='\n')
+    console.log(plainText.split(''))
     if (selectionChecker() === false) return;
 
     if (
@@ -73,7 +75,6 @@ function App() {
     }
   };
   const italicText = () => {
-    console.log(selection.start,selection.end);
     if (selectionChecker() === false) return;
 
     if (
@@ -114,7 +115,37 @@ function App() {
       );
     }
   };
+  const addHeading = () => { 
+    console.log(selection.start,selection.end);
+    
+    let start = selection.start
 
+    while (start >= 0){ 
+      if (plainText[start] === '\n') {
+        break;
+      }
+      else if (plainText[start] === '#') {
+        setPlainText(sliceHelper(plainText, [0, start], [start+1, selection.end],[selection.end]))
+        return;
+      }
+      start--;
+    }
+    let end = selection.end
+    while (end < plainText.length) {
+      if (plainText[end] === '\n') {
+        break;
+      }
+      end++
+    }
+
+    const text = plainText.slice(0, start+1) + ((plainText[start+1]===' ')?'#':"# ") + plainText.slice(start+1, end)  + plainText.slice(end)
+    setPlainText(text)
+
+
+
+  }
+
+  
   const icon = t === "light" ? MoonIcon : sunIcon;
 
   return (
@@ -140,7 +171,8 @@ function App() {
             plainText={plainText}
             setPlainText={setPlainText}
             boldText={boldText}
-            italicText={ italicText}
+            italicText={italicText}
+            addHeading={ addHeading}
           />
 
           <Toggle
@@ -165,7 +197,9 @@ function App() {
           plainText={plainText}
           setPlainText={setPlainText}
           boldText={boldText}
-          italicText={ italicText}
+          italicText={italicText}
+          addHeading={ addHeading}
+          
 
         />
       </FlexStyled>

@@ -9,7 +9,12 @@ const ToolbarWrapper = styled(FlexStyled)`
   background-color: ${(props) => props.theme.bg};
   border-radius: 0.5rem;
   transition: background-color 0.25s ease-in;
-
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; 
   & > * {
     border: 1px solid ${(props) => props.theme.color};
     width: 2rem;
@@ -46,7 +51,7 @@ const sliceHelper = (str:string, ...slices:number[][]) => {
     return newString
 }
 
-function Toolbar(props: {italicText:()=>void,boldText:()=>void, selection: { start: number, end: number },plainText:string,setPlainText:React.Dispatch<React.SetStateAction<string>> }) {
+function Toolbar(props: {addHeading:()=>void,italicText:()=>void,boldText:()=>void, selection: { start: number, end: number },plainText:string,setPlainText:React.Dispatch<React.SetStateAction<string>> }) {
   return (
     <ToolbarWrapper
       as={motion.div}
@@ -69,7 +74,7 @@ function Toolbar(props: {italicText:()=>void,boldText:()=>void, selection: { sta
       <SpanWithHoverAnimation as={motion.span} variants={item} onClick={ props.italicText}>
         <FaItalic />
       </SpanWithHoverAnimation>
-      <SpanWithHoverAnimation as={motion.span} variants={item}>
+      <SpanWithHoverAnimation as={motion.span} variants={item} onClick={ props.addHeading}>
         <FaHeading />
       </SpanWithHoverAnimation>
     </ToolbarWrapper>

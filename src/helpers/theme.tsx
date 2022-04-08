@@ -3,6 +3,14 @@ const darkColor = "#262726"
 const lightColor = "#eaeaea"
 const accent = "#d0b68c";
 
+export interface themeProps { 
+    bg: string;
+    elementColor: string;
+    color:string
+
+}
+
+
 const theme = {
     light: {
         bg: lightColor,
