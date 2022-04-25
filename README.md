@@ -1,8 +1,8 @@
 # Markdown Editor
 
-<marquee >
+
 <h1 style='color:red'>This repo is under construction</h1>
-</marquee>
+
 
 ## Table of contents
 * [General info](#General-info)
