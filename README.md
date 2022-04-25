@@ -1,7 +1,9 @@
 # Markdown Editor
 
 
-<h1 style='color:red'>This repo is under construction</h1>
+```diff
+! This repo is under construction
+```
 
 
 ## Table of contents
